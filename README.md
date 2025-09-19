@@ -293,39 +293,6 @@ fileInput := base.FileInput{
 }
 ```
 
-## ⚡ Async Operations
-
-Many APIs return a processing status. Use the fetch API to get results:
-
-```go
-// Initial request returns processing status
-resp, _ := videoAPI.TextToVideo(context.Background(), req)
-
-// Extract fetch URL from response
-fetchURL := (*resp)["fetch_result"].(string)
-
-// Poll for completion (implement your own retry logic)
-time.Sleep(10 * time.Second)
-// Use base API fetch method or make direct HTTP calls
-```
-
-## 🚨 Error Handling
-
-```go
-resp, err := communityAPI.TextToImage(context.Background(), req)
-if err != nil {
-    log.Printf("API error: %v", err)
-    return
-}
-
-// Check response status
-if status, ok := (*resp)["status"].(string); ok && status == "error" {
-    if message, ok := (*resp)["message"].(string); ok {
-        log.Printf("API returned error: %s", message)
-    }
-}
-```
-
 ## 🤝 Contributing
 
 1. Fork the repository

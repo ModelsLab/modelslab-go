@@ -18,7 +18,7 @@ type API struct {
 // New creates a new community API instance
 func New(c *client.Client, enterprise bool) *API {
 	return &API{
-		BaseAPI: base.NewBaseAPI(c, enterprise, "images/text2img"),
+		BaseAPI: base.NewBaseAPI(c, enterprise, "images"),
 	}
 }
 
