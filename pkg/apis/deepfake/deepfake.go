@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/deepfake"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // SpecificFaceSwap performs specific face swap
-func (d *API) SpecificFaceSwap(ctx context.Context, req *deepfake.SpecificFaceSwapRequest) (*deepfake.DeepFakeResponse, error) {
+func (d *API) SpecificFaceSwap(ctx context.Context, req *deepfake.SpecificFaceSwapRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (d *API) SpecificFaceSwap(ctx context.Context, req *deepfake.SpecificFaceSw
 		return nil, fmt.Errorf("specific face swap request failed: %w", err)
 	}
 
-	return &deepfake.DeepFakeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // MultipleFaceSwap performs multiple face swap
-func (d *API) MultipleFaceSwap(ctx context.Context, req *deepfake.MultipleFaceSwapRequest) (*deepfake.DeepFakeResponse, error) {
+func (d *API) MultipleFaceSwap(ctx context.Context, req *deepfake.MultipleFaceSwapRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (d *API) MultipleFaceSwap(ctx context.Context, req *deepfake.MultipleFaceSw
 		return nil, fmt.Errorf("multiple face swap request failed: %w", err)
 	}
 
-	return &deepfake.DeepFakeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // MultipleVideoSwap performs multiple video face swap
-func (d *API) MultipleVideoSwap(ctx context.Context, req *deepfake.SpecificVideoSwapRequest) (*deepfake.DeepFakeResponse, error) {
+func (d *API) MultipleVideoSwap(ctx context.Context, req *deepfake.SpecificVideoSwapRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,18 +64,11 @@ func (d *API) MultipleVideoSwap(ctx context.Context, req *deepfake.SpecificVideo
 		return nil, fmt.Errorf("multiple video swap request failed: %w", err)
 	}
 
-	return &deepfake.DeepFakeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // SingleVideoSwap performs single video face swap
-func (d *API) SingleVideoSwap(ctx context.Context, req *deepfake.SingleVideoSwapRequest) (*deepfake.DeepFakeResponse, error) {
+func (d *API) SingleVideoSwap(ctx context.Context, req *deepfake.SingleVideoSwapRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -101,12 +79,5 @@ func (d *API) SingleVideoSwap(ctx context.Context, req *deepfake.SingleVideoSwap
 		return nil, fmt.Errorf("single video swap request failed: %w", err)
 	}
 
-	return &deepfake.DeepFakeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

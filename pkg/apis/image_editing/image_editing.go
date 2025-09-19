@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/image_editing"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // Outpainting performs outpainting
-func (i *API) Outpainting(ctx context.Context, req *image_editing.OutpaintingRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) Outpainting(ctx context.Context, req *image_editing.OutpaintingRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (i *API) Outpainting(ctx context.Context, req *image_editing.OutpaintingReq
 		return nil, fmt.Errorf("outpainting request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // BackgroundRemover performs background removal
-func (i *API) BackgroundRemover(ctx context.Context, req *image_editing.BackgroundRemoverRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) BackgroundRemover(ctx context.Context, req *image_editing.BackgroundRemoverRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (i *API) BackgroundRemover(ctx context.Context, req *image_editing.Backgrou
 		return nil, fmt.Errorf("background removal request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // SuperResolution performs super resolution
-func (i *API) SuperResolution(ctx context.Context, req *image_editing.SuperResolutionRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) SuperResolution(ctx context.Context, req *image_editing.SuperResolutionRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,18 +64,11 @@ func (i *API) SuperResolution(ctx context.Context, req *image_editing.SuperResol
 		return nil, fmt.Errorf("super resolution request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Fashion performs fashion generation
-func (i *API) Fashion(ctx context.Context, req *image_editing.FashionRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) Fashion(ctx context.Context, req *image_editing.FashionRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -101,18 +79,11 @@ func (i *API) Fashion(ctx context.Context, req *image_editing.FashionRequest) (*
 		return nil, fmt.Errorf("fashion request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ObjectRemover performs object removal
-func (i *API) ObjectRemover(ctx context.Context, req *image_editing.ObjectRemovalRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) ObjectRemover(ctx context.Context, req *image_editing.ObjectRemovalRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -123,18 +94,11 @@ func (i *API) ObjectRemover(ctx context.Context, req *image_editing.ObjectRemova
 		return nil, fmt.Errorf("object removal request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // FaceGen performs face generation
-func (i *API) FaceGen(ctx context.Context, req *image_editing.FacegenRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) FaceGen(ctx context.Context, req *image_editing.FacegenRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -145,18 +109,11 @@ func (i *API) FaceGen(ctx context.Context, req *image_editing.FacegenRequest) (*
 		return nil, fmt.Errorf("face generation request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Inpainting performs inpainting
-func (i *API) Inpainting(ctx context.Context, req *image_editing.InpaintingRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) Inpainting(ctx context.Context, req *image_editing.InpaintingRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -167,18 +124,11 @@ func (i *API) Inpainting(ctx context.Context, req *image_editing.InpaintingReque
 		return nil, fmt.Errorf("inpainting request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Headshot performs headshot generation
-func (i *API) Headshot(ctx context.Context, req *image_editing.HeadshotRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) Headshot(ctx context.Context, req *image_editing.HeadshotRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -189,18 +139,11 @@ func (i *API) Headshot(ctx context.Context, req *image_editing.HeadshotRequest) 
 		return nil, fmt.Errorf("headshot request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // FluxHeadshot performs flux headshot generation
-func (i *API) FluxHeadshot(ctx context.Context, req *image_editing.FluxHeadshotRequest) (*image_editing.ImageEditingResponse, error) {
+func (i *API) FluxHeadshot(ctx context.Context, req *image_editing.FluxHeadshotRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -211,12 +154,5 @@ func (i *API) FluxHeadshot(ctx context.Context, req *image_editing.FluxHeadshotR
 		return nil, fmt.Errorf("flux headshot request failed: %w", err)
 	}
 
-	return &image_editing.ImageEditingResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

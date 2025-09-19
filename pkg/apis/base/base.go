@@ -6,7 +6,6 @@ import (
 	"fmt"
 
 	"github.com/modelslab/modelslab-go/pkg/client"
-	"github.com/modelslab/modelslab-go/pkg/schemas/base"
 )
 
 // BaseAPI provides common functionality for all API modules
@@ -33,7 +32,7 @@ func NewBaseAPI(c *client.Client, enterprise bool, apiPath string) *BaseAPI {
 }
 
 // Fetch performs a fetch operation with the provided ID
-func (b *BaseAPI) Fetch(ctx context.Context, id string) (*base.Response, error) {
+func (b *BaseAPI) Fetch(ctx context.Context, id string) (*client.APIResponse, error) {
 	if id == "" {
 		return nil, fmt.Errorf("id is required for fetch operation")
 	}
@@ -43,16 +42,11 @@ func (b *BaseAPI) Fetch(ctx context.Context, id string) (*base.Response, error) 
 		return nil, fmt.Errorf("fetch operation failed: %w", err)
 	}
 
-	return &base.Response{
-		Status:  resp.Status,
-		Message: resp.Message,
-		Data:    resp.Data,
-		Error:   resp.Error,
-	}, nil
+	return resp, nil
 }
 
 // SystemDetails returns system details (enterprise only)
-func (b *BaseAPI) SystemDetails(ctx context.Context) (*base.SystemDetailsResponse, error) {
+func (b *BaseAPI) SystemDetails(ctx context.Context) (*client.APIResponse, error) {
 	if !b.enterprise {
 		return nil, fmt.Errorf("system details are only available for enterprise users")
 	}
@@ -63,18 +57,11 @@ func (b *BaseAPI) SystemDetails(ctx context.Context) (*base.SystemDetailsRespons
 		return nil, fmt.Errorf("system details request failed: %w", err)
 	}
 
-	return &base.SystemDetailsResponse{
-		Response: base.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // RestartServer restarts the server (enterprise only)
-func (b *BaseAPI) RestartServer(ctx context.Context) (*base.Response, error) {
+func (b *BaseAPI) RestartServer(ctx context.Context) (*client.APIResponse, error) {
 	if !b.enterprise {
 		return nil, fmt.Errorf("restart server is only available for enterprise users")
 	}
@@ -85,16 +72,11 @@ func (b *BaseAPI) RestartServer(ctx context.Context) (*base.Response, error) {
 		return nil, fmt.Errorf("restart server request failed: %w", err)
 	}
 
-	return &base.Response{
-		Status:  resp.Status,
-		Message: resp.Message,
-		Data:    resp.Data,
-		Error:   resp.Error,
-	}, nil
+	return resp, nil
 }
 
 // Update updates the system (enterprise only)
-func (b *BaseAPI) Update(ctx context.Context) (*base.Response, error) {
+func (b *BaseAPI) Update(ctx context.Context) (*client.APIResponse, error) {
 	if !b.enterprise {
 		return nil, fmt.Errorf("update is only available for enterprise users")
 	}
@@ -105,16 +87,11 @@ func (b *BaseAPI) Update(ctx context.Context) (*base.Response, error) {
 		return nil, fmt.Errorf("update request failed: %w", err)
 	}
 
-	return &base.Response{
-		Status:  resp.Status,
-		Message: resp.Message,
-		Data:    resp.Data,
-		Error:   resp.Error,
-	}, nil
+	return resp, nil
 }
 
 // ClearCache clears the cache (enterprise only)
-func (b *BaseAPI) ClearCache(ctx context.Context) (*base.Response, error) {
+func (b *BaseAPI) ClearCache(ctx context.Context) (*client.APIResponse, error) {
 	if !b.enterprise {
 		return nil, fmt.Errorf("clear cache is only available for enterprise users")
 	}
@@ -125,16 +102,11 @@ func (b *BaseAPI) ClearCache(ctx context.Context) (*base.Response, error) {
 		return nil, fmt.Errorf("clear cache request failed: %w", err)
 	}
 
-	return &base.Response{
-		Status:  resp.Status,
-		Message: resp.Message,
-		Data:    resp.Data,
-		Error:   resp.Error,
-	}, nil
+	return resp, nil
 }
 
 // ClearQueue clears the queue (enterprise only)
-func (b *BaseAPI) ClearQueue(ctx context.Context) (*base.Response, error) {
+func (b *BaseAPI) ClearQueue(ctx context.Context) (*client.APIResponse, error) {
 	if !b.enterprise {
 		return nil, fmt.Errorf("clear queue is only available for enterprise users")
 	}
@@ -145,12 +117,7 @@ func (b *BaseAPI) ClearQueue(ctx context.Context) (*base.Response, error) {
 		return nil, fmt.Errorf("clear queue request failed: %w", err)
 	}
 
-	return &base.Response{
-		Status:  resp.Status,
-		Message: resp.Message,
-		Data:    resp.Data,
-		Error:   resp.Error,
-	}, nil
+	return resp, nil
 }
 
 // GetClient returns the underlying client

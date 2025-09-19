@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/video"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // TextToVideo performs text-to-video generation
-func (v *API) TextToVideo(ctx context.Context, req *video.Text2VideoRequest) (*video.VideoResponse, error) {
+func (v *API) TextToVideo(ctx context.Context, req *video.Text2VideoRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (v *API) TextToVideo(ctx context.Context, req *video.Text2VideoRequest) (*v
 		return nil, fmt.Errorf("text-to-video request failed: %w", err)
 	}
 
-	return &video.VideoResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ImageToVideo performs image-to-video generation
-func (v *API) ImageToVideo(ctx context.Context, req *video.Image2VideoRequest) (*video.VideoResponse, error) {
+func (v *API) ImageToVideo(ctx context.Context, req *video.Image2VideoRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (v *API) ImageToVideo(ctx context.Context, req *video.Image2VideoRequest) (
 		return nil, fmt.Errorf("image-to-video request failed: %w", err)
 	}
 
-	return &video.VideoResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // TextToVideoUltra performs ultra text-to-video generation
-func (v *API) TextToVideoUltra(ctx context.Context, req *video.Text2VideoUltraRequest) (*video.VideoResponse, error) {
+func (v *API) TextToVideoUltra(ctx context.Context, req *video.Text2VideoUltraRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,12 +64,5 @@ func (v *API) TextToVideoUltra(ctx context.Context, req *video.Text2VideoUltraRe
 		return nil, fmt.Errorf("ultra text-to-video request failed: %w", err)
 	}
 
-	return &video.VideoResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

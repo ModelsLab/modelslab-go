@@ -74,12 +74,8 @@ func NewWithConfig(config *Config) *Client {
 }
 
 // APIResponse represents a standard API response
-type APIResponse struct {
-	Status  string      `json:"status"`
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
-	Error   string      `json:"error,omitempty"`
-}
+// Changed to map[string]interface{} to preserve all fields from API
+type APIResponse map[string]interface{}
 
 // APIError represents an API error
 type APIError struct {
@@ -180,11 +176,15 @@ func (c *Client) Fetch(ctx context.Context, endpoint, id string) (*APIResponse, 
 			continue
 		}
 
-		if resp.Status == "success" {
+		if status, ok := (*resp)["status"].(string); ok && status == "success" {
 			return resp, nil
 		}
 
-		lastErr = fmt.Errorf("fetch failed: %s", resp.Message)
+		message := ""
+		if msg, ok := (*resp)["message"].(string); ok {
+			message = msg
+		}
+		lastErr = fmt.Errorf("fetch failed: %s", message)
 		time.Sleep(c.fetchTimeout)
 	}
 

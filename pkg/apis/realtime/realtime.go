@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/realtime"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // TextToImage performs realtime text-to-image generation
-func (r *API) TextToImage(ctx context.Context, req *realtime.Text2ImageRequest) (*realtime.RealtimeResponse, error) {
+func (r *API) TextToImage(ctx context.Context, req *realtime.Text2ImageRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (r *API) TextToImage(ctx context.Context, req *realtime.Text2ImageRequest) 
 		return nil, fmt.Errorf("realtime text-to-image request failed: %w", err)
 	}
 
-	return &realtime.RealtimeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ImageToImage performs realtime image-to-image generation
-func (r *API) ImageToImage(ctx context.Context, req *realtime.Image2ImageRequest) (*realtime.RealtimeResponse, error) {
+func (r *API) ImageToImage(ctx context.Context, req *realtime.Image2ImageRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (r *API) ImageToImage(ctx context.Context, req *realtime.Image2ImageRequest
 		return nil, fmt.Errorf("realtime image-to-image request failed: %w", err)
 	}
 
-	return &realtime.RealtimeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Inpainting performs realtime inpainting
-func (r *API) Inpainting(ctx context.Context, req *realtime.InpaintingRequest) (*realtime.RealtimeResponse, error) {
+func (r *API) Inpainting(ctx context.Context, req *realtime.InpaintingRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,12 +64,5 @@ func (r *API) Inpainting(ctx context.Context, req *realtime.InpaintingRequest) (
 		return nil, fmt.Errorf("realtime inpainting request failed: %w", err)
 	}
 
-	return &realtime.RealtimeResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

@@ -8,7 +8,6 @@ import (
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
 	"github.com/modelslab/modelslab-go/pkg/schemas/audio"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 )
 
 // API provides audio-related operations
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // TextToAudio performs text-to-audio conversion
-func (a *API) TextToAudio(ctx context.Context, req *audio.Text2AudioRequest) (*audio.AudioResponse, error) {
+func (a *API) TextToAudio(ctx context.Context, req *audio.Text2AudioRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (a *API) TextToAudio(ctx context.Context, req *audio.Text2AudioRequest) (*a
 		return nil, fmt.Errorf("text-to-audio request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // TextToSpeech performs text-to-speech conversion
-func (a *API) TextToSpeech(ctx context.Context, req *audio.Text2SpeechRequest) (*audio.AudioResponse, error) {
+func (a *API) TextToSpeech(ctx context.Context, req *audio.Text2SpeechRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (a *API) TextToSpeech(ctx context.Context, req *audio.Text2SpeechRequest) (
 		return nil, fmt.Errorf("text-to-speech request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Voice2Voice performs voice-to-voice conversion
-func (a *API) Voice2Voice(ctx context.Context, req *audio.Voice2VoiceRequest) (*audio.AudioResponse, error) {
+func (a *API) Voice2Voice(ctx context.Context, req *audio.Voice2VoiceRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,18 +64,11 @@ func (a *API) Voice2Voice(ctx context.Context, req *audio.Voice2VoiceRequest) (*
 		return nil, fmt.Errorf("voice-to-voice request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // VoiceCover performs voice cover generation
-func (a *API) VoiceCover(ctx context.Context, req *audio.VoiceCoverRequest) (*audio.AudioResponse, error) {
+func (a *API) VoiceCover(ctx context.Context, req *audio.VoiceCoverRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -101,18 +79,11 @@ func (a *API) VoiceCover(ctx context.Context, req *audio.VoiceCoverRequest) (*au
 		return nil, fmt.Errorf("voice cover request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // MusicGen performs music generation
-func (a *API) MusicGen(ctx context.Context, req *audio.MusicGenRequest) (*audio.AudioResponse, error) {
+func (a *API) MusicGen(ctx context.Context, req *audio.MusicGenRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -123,18 +94,11 @@ func (a *API) MusicGen(ctx context.Context, req *audio.MusicGenRequest) (*audio.
 		return nil, fmt.Errorf("music generation request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // LyricsGen performs lyrics generation
-func (a *API) LyricsGen(ctx context.Context, req *audio.LyricsGeneratorRequest) (*audio.LyricsResponse, error) {
+func (a *API) LyricsGen(ctx context.Context, req *audio.LyricsGeneratorRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -145,18 +109,11 @@ func (a *API) LyricsGen(ctx context.Context, req *audio.LyricsGeneratorRequest) 
 		return nil, fmt.Errorf("lyrics generation request failed: %w", err)
 	}
 
-	return &audio.LyricsResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // SongGenerator performs song generation
-func (a *API) SongGenerator(ctx context.Context, req *audio.SongGeneratorRequest) (*audio.AudioResponse, error) {
+func (a *API) SongGenerator(ctx context.Context, req *audio.SongGeneratorRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -167,18 +124,11 @@ func (a *API) SongGenerator(ctx context.Context, req *audio.SongGeneratorRequest
 		return nil, fmt.Errorf("song generation request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // SpeechToText performs speech-to-text conversion
-func (a *API) SpeechToText(ctx context.Context, req *audio.Speech2TextRequest) (*audio.TranscriptionResponse, error) {
+func (a *API) SpeechToText(ctx context.Context, req *audio.Speech2TextRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -189,18 +139,11 @@ func (a *API) SpeechToText(ctx context.Context, req *audio.Speech2TextRequest) (
 		return nil, fmt.Errorf("speech-to-text request failed: %w", err)
 	}
 
-	return &audio.TranscriptionResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // SFXGen performs sound effects generation
-func (a *API) SFXGen(ctx context.Context, req *audio.SFXRequest) (*audio.AudioResponse, error) {
+func (a *API) SFXGen(ctx context.Context, req *audio.SFXRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -211,12 +154,5 @@ func (a *API) SFXGen(ctx context.Context, req *audio.SFXRequest) (*audio.AudioRe
 		return nil, fmt.Errorf("SFX generation request failed: %w", err)
 	}
 
-	return &audio.AudioResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

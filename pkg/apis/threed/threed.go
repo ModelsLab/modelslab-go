@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/threed"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // TextTo3D performs text-to-3D generation
-func (t *API) TextTo3D(ctx context.Context, req *threed.Text23DRequest) (*threed.ThreeDResponse, error) {
+func (t *API) TextTo3D(ctx context.Context, req *threed.Text23DRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (t *API) TextTo3D(ctx context.Context, req *threed.Text23DRequest) (*threed
 		return nil, fmt.Errorf("text-to-3D request failed: %w", err)
 	}
 
-	return &threed.ThreeDResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ImageTo3D performs image-to-3D generation
-func (t *API) ImageTo3D(ctx context.Context, req *threed.Image23DRequest) (*threed.ThreeDResponse, error) {
+func (t *API) ImageTo3D(ctx context.Context, req *threed.Image23DRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,12 +49,5 @@ func (t *API) ImageTo3D(ctx context.Context, req *threed.Image23DRequest) (*thre
 		return nil, fmt.Errorf("image-to-3D request failed: %w", err)
 	}
 
-	return &threed.ThreeDResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }

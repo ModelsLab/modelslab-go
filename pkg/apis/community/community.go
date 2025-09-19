@@ -7,7 +7,6 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/base"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	baseSchema "github.com/modelslab/modelslab-go/pkg/schemas/base"
 	"github.com/modelslab/modelslab-go/pkg/schemas/community"
 )
 
@@ -24,7 +23,7 @@ func New(c *client.Client, enterprise bool) *API {
 }
 
 // TextToImage performs text-to-image generation
-func (c *API) TextToImage(ctx context.Context, req *community.Text2ImageRequest) (*community.ImageResponse, error) {
+func (c *API) TextToImage(ctx context.Context, req *community.Text2ImageRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -35,18 +34,11 @@ func (c *API) TextToImage(ctx context.Context, req *community.Text2ImageRequest)
 		return nil, fmt.Errorf("text-to-image request failed: %w", err)
 	}
 
-	return &community.ImageResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ImageToImage performs image-to-image generation
-func (c *API) ImageToImage(ctx context.Context, req *community.Image2ImageRequest) (*community.ImageResponse, error) {
+func (c *API) ImageToImage(ctx context.Context, req *community.Image2ImageRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -57,18 +49,11 @@ func (c *API) ImageToImage(ctx context.Context, req *community.Image2ImageReques
 		return nil, fmt.Errorf("image-to-image request failed: %w", err)
 	}
 
-	return &community.ImageResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // Inpainting performs inpainting
-func (c *API) Inpainting(ctx context.Context, req *community.InpaintingRequest) (*community.ImageResponse, error) {
+func (c *API) Inpainting(ctx context.Context, req *community.InpaintingRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -79,18 +64,11 @@ func (c *API) Inpainting(ctx context.Context, req *community.InpaintingRequest) 
 		return nil, fmt.Errorf("inpainting request failed: %w", err)
 	}
 
-	return &community.ImageResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
 
 // ControlNet performs ControlNet generation
-func (c *API) ControlNet(ctx context.Context, req *community.ControlNetRequest) (*community.ImageResponse, error) {
+func (c *API) ControlNet(ctx context.Context, req *community.ControlNetRequest) (*client.APIResponse, error) {
 	if req == nil {
 		return nil, fmt.Errorf("request cannot be nil")
 	}
@@ -101,12 +79,5 @@ func (c *API) ControlNet(ctx context.Context, req *community.ControlNetRequest) 
 		return nil, fmt.Errorf("ControlNet request failed: %w", err)
 	}
 
-	return &community.ImageResponse{
-		Response: baseSchema.Response{
-			Status:  resp.Status,
-			Message: resp.Message,
-			Data:    resp.Data,
-			Error:   resp.Error,
-		},
-	}, nil
+	return resp, nil
 }
