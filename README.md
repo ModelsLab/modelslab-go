@@ -2,18 +2,17 @@
 
 Official Go SDK for [ModelsLab API](https://modelslab.com) - Generate AI content including images, videos, audio, 3D models, and more.
 
-## ✨ Features
+## Features
 
-- 🖼️ **Text-to-Image & Image-to-Image** generation
-- 🎥 **Text-to-Video & Image-to-Video** creation  
-- 🎵 **Text-to-Speech & Music** generation
-- 🎭 **Face Swap & Deepfake** operations
-- 🏠 **Interior Design & 3D** modeling
-- 🎨 **Image Editing** (upscaling, background removal, etc.)
-- ⚡ **Realtime** generation APIs
-- 🔧 **Enterprise** features support
+**Text-to-Image & Image-to-Image** generation
+**Text-to-Speech & Music** generation
+**Face Swap & Deepfake** operations
+**Interior Design & 3D** modeling
+**Image Editing** (upscaling, background removal, etc.)
+**Realtime** generation APIs
+**Enterprise** features support
 
-## 🚀 Quick Start
+## Quick Start
 
 ### 1. Installation
 
@@ -26,47 +25,39 @@ go get github.com/modelslab/modelslab-go
 
 1. Sign up at [ModelsLab.com](https://modelslab.com)
 2. Go to your dashboard
-3. Copy your API key
+3. get your API key
 
-### 3. Basic Usage
+### 3. Basic Usage with community models
 
 ```go
-package main
-
 import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"log"
 
 	"github.com/modelslab/modelslab-go/pkg/apis/community"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	"github.com/modelslab/modelslab-go/pkg/schemas/community"
+	communitySchema "github.com/modelslab/modelslab-go/pkg/schemas/community"
 )
 
 func main() {
-	// Initialize client with your API key
-	apiKey := "your-api-key-here"
-	c := client.New(apiKey)
+	c := client.New("your-api-key")
+	api := community.New(c, false)
 
-	// Create community API instance
-	communityAPI := community.New(c, false)
-
-	// Generate an image
-	prompt := "A beautiful sunset over mountains"
-	req := &community.Text2ImageRequest{
-		Prompt: prompt,
+	model := "midjourney"
+	req := &communitySchema.Text2ImageRequest{
+		Prompt:  "a cat",
+		ModelID: &model,
 	}
 
-	// Call the API
-	resp, err := communityAPI.TextToImage(context.Background(), req)
+	resp, err := api.TextToImage(context.Background(), &req)
 	if err != nil {
-		log.Fatalf("API call failed: %v", err)
+		fmt.Println("Error:", err)
+		return
 	}
 
-	// Print the complete response
-	prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
-	fmt.Println(string(prettyJSON))
+	out, _ := json.MarshalIndent(resp, "", "  ")
+	fmt.Println(string(out))
 }
 ```
 
@@ -76,7 +67,7 @@ func main() {
 go run main.go
 ```
 
-## 📚 API Examples
+## API Examples
 
 ### Text-to-Speech
 
@@ -90,36 +81,33 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/audio"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	"github.com/modelslab/modelslab-go/pkg/schemas/audio"
+	audioSchema "github.com/modelslab/modelslab-go/pkg/schemas/audio"
 )
 
 func main() {
 	c := client.New("your-api-key")
-	audioAPI := audio.New(c, false)
+	api := audio.New(c, false)
 
+	voice_id := "madison"
 	language := "english"
-	voiceID := "madison"
-	speed := 1.0
-
-	req := &audio.Text2SpeechRequest{
-		Prompt:   "Hello, this is a test of ModelsLab text-to-speech!",
+	req := audioSchema.Text2SpeechRequest{
+		Prompt:   "a cat sitting on a mat",
+		VoiceID:  &voice_id,
 		Language: &language,
-		VoiceID:  &voiceID,
-		Speed:    &speed,
 	}
 
-	resp, err := audioAPI.TextToSpeech(context.Background(), req)
+	resp, err := api.TextToSpeech(context.Background(), &req)
 	if err != nil {
-		panic(err)
+		fmt.Println("Error:", err)
+		return
 	}
 
-	// Response contains audio URL, processing info, etc.
-	prettyJSON, _ := json.MarshalIndent(resp, "", "  ")
-	fmt.Println(string(prettyJSON))
+	out, _ := json.MarshalIndent(resp, "", "  ")
+	fmt.Println(string(out))
 }
 ```
 
-### Face Swap
+### Multiple Face Swap
 
 ```go
 package main
@@ -132,17 +120,17 @@ import (
 	"github.com/modelslab/modelslab-go/pkg/apis/deepfake"
 	"github.com/modelslab/modelslab-go/pkg/client"
 	"github.com/modelslab/modelslab-go/pkg/schemas/base"
-	"github.com/modelslab/modelslab-go/pkg/schemas/deepfake"
+	deepfakeSchema "github.com/modelslab/modelslab-go/pkg/schemas/deepfake"
 )
 
 func main() {
 	c := client.New("your-api-key")
 	deepfakeAPI := deepfake.New(c, false)
 
-	initImageURL := "https://example.com/person1.jpg"
-	targetImageURL := "https://example.com/person2.jpg"
+	initImageURL := "https://i.pinimg.com/564x/4c/6a/d0/4c6ad0f74a3a251344cb115699a9a7c9.jpg"
+	targetImageURL := "https://i.pinimg.com/564x/11/ac/0d/11ac0ddaf6962e395f30abc61043393e.jpg"
 
-	req := &deepfake.MultipleFaceSwapRequest{
+	req := deepfakeSchema.MultipleFaceSwapRequest{
 		InitImage: base.FileInput{
 			URL: &initImageURL,
 		},
@@ -151,7 +139,7 @@ func main() {
 		},
 	}
 
-	resp, err := deepfakeAPI.MultipleFaceSwap(context.Background(), req)
+	resp, err := deepfakeAPI.MultipleFaceSwap(context.Background(), &req)
 	if err != nil {
 		panic(err)
 	}
@@ -173,18 +161,19 @@ import (
 
 	"github.com/modelslab/modelslab-go/pkg/apis/video"
 	"github.com/modelslab/modelslab-go/pkg/client"
-	"github.com/modelslab/modelslab-go/pkg/schemas/video"
+	videoSchema "github.com/modelslab/modelslab-go/pkg/schemas/video"
 )
 
 func main() {
 	c := client.New("your-api-key")
 	videoAPI := video.New(c, false)
 
-	req := &video.Text2VideoRequest{
-		Prompt: "A cat playing with a ball in a sunny garden",
+	req := videoSchema.Text2VideoRequest{
+		Prompt:  "A cat playing with a ball in a sunny garden",
+		ModelID: "cogvideox",
 	}
 
-	resp, err := videoAPI.TextToVideo(context.Background(), req)
+	resp, err := videoAPI.TextToVideo(context.Background(), &req)
 	if err != nil {
 		panic(err)
 	}
@@ -207,7 +196,7 @@ func main() {
 | **3D** | Text-to-3D, Image-to-3D | `github.com/modelslab/modelslab-go/pkg/apis/threed` |
 | **Realtime** | Real-time Image Generation | `github.com/modelslab/modelslab-go/pkg/apis/realtime` |
 
-## 🔧 Configuration
+## Configuration
 
 ### Basic Client
 
@@ -244,7 +233,7 @@ c := client.NewWithConfig(config)
 communityAPI := community.New(c, true) // true = enterprise mode
 ```
 
-## 📝 Response Format
+## Response Format
 
 The SDK returns **complete raw API responses** as `map[string]interface{}` to preserve all fields:
 
@@ -267,7 +256,7 @@ The SDK returns **complete raw API responses** as `map[string]interface{}` to pr
 
 You get **ALL** fields returned by the API, including metadata, generation time, proxy links, and any future fields.
 
-## 🔍 File Input Options
+## File Input Options
 
 The SDK supports multiple ways to provide images/audio:
 
@@ -293,7 +282,7 @@ fileInput := base.FileInput{
 }
 ```
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -301,22 +290,21 @@ fileInput := base.FileInput{
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📄 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🔗 Links
+## Links
 
 - [ModelsLab Website](https://modelslab.com)
-- [API Documentation](https://modelslab.com/docs)
+- [API Documentation](https://docs.modelslab.com)
 - [Get API Key](https://modelslab.com/dashboard)
-- [Discord Community](https://discord.gg/modelslab)
+- [Discord Community](https://discord.com/invite/modelslab-1033301189254729748)
 
-## 📞 Support
+## Support
 
-- 📧 Email: support@modelslab.com
-- 💬 Discord: [Join our community](https://discord.gg/modelslab)
-- 📖 Documentation: [modelslab.com/docs](https://modelslab.com/docs)
+- Email: mailto:support@modelslab.com
+- Discord: [Join our community](https://discord.com/invite/modelslab-1033301189254729748)
+- Documentation: [modelslab.com/docs](https://docs.modelslab.com)
 
 ---
-
